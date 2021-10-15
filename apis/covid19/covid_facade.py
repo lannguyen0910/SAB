@@ -31,11 +31,8 @@ class CovidFacade:
     def emit(self, message, file, channel):
         """Sends a message to your channel.
         Args:
-            blocks: Expected to be a json-like array object containing the rich
-                text representation of the listings we've found. The methods in
-                this object should be used to construct the Rich Message Blocks.
-                See the Slack kit builder for more information on block
-                construction: https://app.slack.com/block-kit-builder
+            message: string. Covid info in the country from Covid API.
+            file: string. Path to image which plots the Covid API info such as: [Confirmed Cases | Deaths | Recovered Cases].
             channel: string, The channel to send the message to.
         """
         try:
@@ -53,7 +50,7 @@ class CovidFacade:
 
         return response
 
-    def send_messages(self, messages, files, channel=None):
+    def send_messages(self, messages, files, channel='#covid'):
         channel = channel or self.default_channel
 
         # Send messages

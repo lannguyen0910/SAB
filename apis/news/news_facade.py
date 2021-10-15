@@ -82,7 +82,7 @@ class NewsFacade(object):
 
         return final_message_keys
 
-    def send_messages(self, articles, name="News", channel=None, n=8):
+    def send_messages(self, articles, name="News", channel='news', n=8):
         """Sends messages after chunking data to comply with slack limits.
         Should chunk data, create rich message layouts, and send the message.
         Args:
