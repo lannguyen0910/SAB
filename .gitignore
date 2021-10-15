@@ -5,3 +5,5 @@ __pycache__
 Pipfile.lock
 images
 *.json
+token files
+*.pickle
