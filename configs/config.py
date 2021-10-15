@@ -1,7 +1,6 @@
 import os
 
-
-LOGFILE = os.environ.get("LOGFILE", "C:/Users/LENOVO/AppData/Local/Temp")
+# --------------------------------- NEWS ------------------------------------------
 
 SIGNING_SECRET = os.environ.get("SIGNING_SECRET")
 NEWS_API_KEY = os.environ.get("NEWS_API_KEY")
@@ -17,3 +16,8 @@ TIMEZONE = "Asia/Saigon"
 # Valid 2 letter The 2-letter ISO 3166-1 code (lowercase).
 # E.g. "us" for USA. Defaults to all.
 COUNTRY_CODE = "vn"
+
+
+# ------------------------------- CALENDAR -----------------------------------------
+SCOPES = 'https://www.googleapis.com/auth/calendar.readonly'
+CLIENT_SECRET_FILE = 'token.json'
