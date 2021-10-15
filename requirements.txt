@@ -1,0 +1,11 @@
+yelp
+python-dotenv
+slack-sdk
+flask
+slackeventsapi
+newsapi-python
+slack-sdk
+pytest-mock
+python-dateutil
+pytz
+pytest
