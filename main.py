@@ -53,13 +53,13 @@ def handle_message(payload):
             news_facade.client.chat_postMessage(channel=channel_id, **response)
 
         elif "news" in text.lower():
-            user_response = text[4:].split(" ")
+            user_response = text[4:].split(", ")
             category = None
 
-            category = user_response[1]
-            country = user_response[2] if len(user_response) > 2 else None
-            language = user_response[3] if len(user_response) > 3 else None
-            query = user_response[4]  if len(user_response) > 4 else None
+            category = user_response[0]
+            country = user_response[1] if len(user_response) > 1 else None
+            language = user_response[2] if len(user_response) > 2 else None
+            query = user_response[3]  if len(user_response) > 3 else None
 
             query_helper = QueryHelper(query=query,
                                         category=category,
@@ -80,9 +80,9 @@ def handle_message(payload):
             return Response(), 200
         
         elif "covid" in text.lower():
-            user_response = text[5:].split(" ")
+            user_response = text[5:].split(", ")
             countries = []
-            if len(user_response) == 1:
+            if len(user_response) == 0:
                 country = 'global'
                 countries.append(country)
             else:
