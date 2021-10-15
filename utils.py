@@ -28,12 +28,14 @@ def show_commands(user):
                         "text": {
                             "type": "mrkdwn",
                             "text": (
-                                "`news [category] [country] [language] [query]` Returns articles in that chosen channel.\n\n"
-                                "Reference: `[https://newsapi.org/docs/endpoints/sources]`\n\n"
-                                "Possible `[category]` options: `[business] [entertainment] [general] [health] [science] [sports] [technology]`\n\n"
-                                "The 2-letter ISO 3166-1 code (lowercase) for the `[country]`\n\n"
-                                "The 2-letter ISO-639-1 code of the `[language]`\n\n"
-                                "*Optional!* The query to use. Advanced search for the specific keyword `[query]`"
+                                "`news [category], [country], [language], [query]`. Returns articles in that chosen channel.\n\n"
+                                "Read this to command properly: `[https://newsapi.org/docs/endpoints/sources]`\n\n"
+                                # "Possible `[category]` options: `[business] [entertainment] [general] [health] [science] [sports] [technology]`\n\n"
+                                # "The 2-letter ISO 3166-1 code (lowercase) for the `[country]`\n\n"
+                                # "The 2-letter ISO-639-1 code of the `[language]`\n\n"
+                                # "*Optional!* The query to use. Advanced search for the specific keyword `[query]`"
+                                "`covid [country 1], [country 2], ... [country n]`. Return covid situation in each country.\n\n"
+                                "Read this to command properly: `[https://api.covid19api.com/countries]`"
                             )
                         }
                     },
@@ -49,9 +51,8 @@ def show_commands(user):
                         "text": {
                             "type": "mrkdwn",
                             "text": (
-                                "`news science us en space`\n\n"
-                                "`news business cn zh`\n\n"
-                                "`news health fr fr `"
+                                "`news science, us, en, space`\n\n"
+                                "`covid vietnam, united-states, japan`"
                             )
                         }
                     }
