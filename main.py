@@ -2,15 +2,21 @@ import logging
 from apis.covid19.covid_facade import CovidFacade
 from apis.covid19.covid_helper import CovidApiHelper
 
-from configs.config import *
 from apis.news.news_helper import NewsApiHelper
 from apis.news.news_facade import NewsFacade
+from apis.news.query_helper import QueryHelper
+
+from apis.translate.translate_helper import TranslateHelper
+from apis.translate.translate_facade import TranslateFacade
+
+
+from configs.config import *
 from flask import Flask, Response
 from slackeventsapi import SlackEventAdapter
 from dotenv import load_dotenv
 from pathlib import Path
 from utils import *
-from apis.news.query_helper import QueryHelper
+
 
 
 env_path = Path('.') / '.env'
@@ -34,6 +40,8 @@ news_api_helper = NewsApiHelper()
 news_facade = NewsFacade()
 covid_api_healper = CovidApiHelper()
 covid_facade = CovidFacade()
+translate_api_helper = TranslateHelper()
+translate_facade = TranslateFacade()
 
 @slack_event_adapter.on('message')
 # Handle all message events
@@ -52,11 +60,13 @@ def handle_message(payload):
             response = show_commands(user_id)
             news_facade.client.chat_postMessage(channel=channel_id, **response)
 
-        elif "news" in text.lower():
-            user_response = text[4:].split(", ")
+        elif "/news" in text[:5].lower():
+            user_response = text[5:].split(", ")
             category = None
 
             category = user_response[0]
+            print("Category: ", category)
+
             country = user_response[1] if len(user_response) > 1 else None
             language = user_response[2] if len(user_response) > 2 else None
             query = user_response[3]  if len(user_response) > 3 else None
@@ -79,8 +89,8 @@ def handle_message(payload):
             
             return Response(), 200
         
-        elif "covid" in text.lower():
-            user_response = text[5:].split(", ")
+        elif "/covid" in text[:6].lower():
+            user_response = text[6:].split(", ")
             countries = []
             if len(user_response) == 0:
                 country = 'global'
@@ -88,6 +98,8 @@ def handle_message(payload):
             else:
                 for i in range(1, len(user_response)):
                     countries.append(str(user_response[i]))
+            
+            print('Countries: ', countries)
 
             responses, files = [], []
             for country in countries:
@@ -103,6 +115,25 @@ def handle_message(payload):
             )
 
             return Response(), 200
+
+        elif '/translate' in text[:10].lower():
+            user_response = text[10:].split(", ")
+
+            assigned_language = user_response[0] # language you want translate to
+            text = user_response[1] # text of any languages that you want to translate
+
+            language_code = DEFAULT_LANGUAGE_CODE
+            for language_tuple in LANGUAGES:
+                if language_tuple[1] == assigned_language:
+                    language_code = language_tuple[0]
+
+            response = translate_api_helper.do_command(text, language_code)
+
+            translate_facade.send_messages(response, channel=channel_id)
+
+
+            return Response(), 200
+
 
         else:
             news_facade.client.chat_postMessage(
