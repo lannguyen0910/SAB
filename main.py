@@ -9,6 +9,8 @@ from apis.news.query_helper import QueryHelper
 from apis.translate.translate_helper import TranslateHelper
 from apis.translate.translate_facade import TranslateFacade
 
+from apis.location_search.location_search_helper import LocationSearchHelper
+from apis.location_search.location_search_facade import LocationSearchFacade
 
 from configs.config import *
 from flask import Flask, Response
@@ -38,10 +40,15 @@ logging.basicConfig(
 
 news_api_helper = NewsApiHelper()
 news_facade = NewsFacade()
+
 covid_api_healper = CovidApiHelper()
 covid_facade = CovidFacade()
+
 translate_api_helper = TranslateHelper()
 translate_facade = TranslateFacade()
+
+location_search_helper = LocationSearchHelper()
+location_search_facade = LocationSearchFacade()
 
 @slack_event_adapter.on('message')
 # Handle all message events
@@ -134,6 +141,18 @@ def handle_message(payload):
 
             return Response(), 200
 
+        elif "/search" in text[:7].lower():
+            user_response = text[7:].split(", ")
+            location = None
+            if len(user_response) > 1:
+                location = user_response[1]
+
+            term = user_response[0]
+            result = location_search_helper.search(term, location)
+
+            location_search_facade.send_messages(result, location, channel=channel_id)            
+
+            return Response(), 200
 
         else:
             news_facade.client.chat_postMessage(
