@@ -22,15 +22,15 @@ class LocationSearchFacade:
     def emit(self, message, channel):
         """Sends a message to your channel.
         Args:
-            message: string. Translated text.
+            message: string. Blocks of location of places.
             channel: string, The channel to send the message to.
         """
         try:
             response = self.client.chat_postMessage(
                 channel=channel,
-                text=message,
                 username=self.bot_name,
-                icon_emoji=self.icon_emoji
+                icon_emoji=self.icon_emoji,
+                **message
             )
 
         except SlackApiError as e:
@@ -45,7 +45,7 @@ class LocationSearchFacade:
         slack_response = self.emit(message, channel)
 
         logging.info(
-            f"Response text from Slack {slack_response}")
+            f"Searched places from Slack {slack_response}")
 
     def display_search(self, response, location):
         if not response:
