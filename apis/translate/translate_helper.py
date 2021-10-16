@@ -9,7 +9,7 @@ def find_text(text):
     matches=re.findall(r'\"(.+?)\"',text)
     return matches[0]
 
-class GoogleTranslateHelper:
+class TranslateHelper:
     """
     Google translation API
     https://py-googletrans.readthedocs.io/en/latest/
@@ -61,7 +61,7 @@ class GoogleTranslateHelper:
         return response
 
 if __name__ == '__main__':
-    google = GoogleTranslateHelper()
+    google = TranslateHelper()
     text = '/translate "I love you"'
     response = google.do_command(text, 'vi')
     print("Response: ", response)
