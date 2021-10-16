@@ -3,22 +3,16 @@ import requests
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 
-from configs import config
+from configs.config import *
 from PIL import Image
 
 
-SLACK_BOT_TEXT = (
-    "Hey there! I found the result you want to ask."
-    "I've listed them below. Following is a bar chart for"
-    "easy visualization.\n\n*I hope you find it interesting!*\n"
-)
-
 class CovidFacade:
 
-    def __init__(self, token=config.SLACK_BOT_TOKEN,
-                 bot_name=config.SLACK_BOT_NAME):
+    def __init__(self, token=SLACK_BOT_TOKEN,
+                 bot_name=SLACK_BOT_NAME):
         self.token = token
-        self.default_channel = config.DEFAULT_SLACK_CHANNEL
+        self.default_channel = DEFAULT_SLACK_CHANNEL
         self.bot_name = bot_name
 
         # Internally set properites
@@ -26,7 +20,6 @@ class CovidFacade:
         self.BOT_ID = self.client.api_call("auth.test")['user_id']
 
         self.icon_emoji = ":mask:"
-        self.slack_message_entries = {}
 
     def emit(self, message, file, channel):
         """Sends a message to your channel.
