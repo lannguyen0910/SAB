@@ -15,4 +15,4 @@ google-auth-httplib2
 google-auth-oauthlib
 oauth2client
 google-api-python-client
-google
+googletrans==3.1.0a0
