@@ -7,3 +7,4 @@ images
 *.json
 token files
 *.pickle
+search.py
