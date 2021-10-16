@@ -22,6 +22,10 @@ COUNTRY_CODE = "vn"
 SCOPES = 'https://www.googleapis.com/auth/calendar.readonly'
 CLIENT_SECRET_FILE = 'token.json'
 
+# -------------------------------- LOCATION SEARCH ---------------------------------
+DEFAULT_LIMIT = os.environ['DEFAULT_LIMIT']  # Ex: 5
+DEFAULT_LOCATION = os.environ['DEFAULT_LOCATION']  # Ex: Berlin, Singapore,...
+YELP_API_KEY = os.environ['YELP_API_KEY']
 
 # ------------------------------- TRANSLATE ----------------------------------------
 # https://gist.github.com/alexanderjulo/4073388
