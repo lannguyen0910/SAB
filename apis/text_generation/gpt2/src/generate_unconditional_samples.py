@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 
-import fire
+# import fire
 import json
 import os
 import numpy as np
 import tensorflow as tf
 from . import model, sample, encoder
+
 
 def sample_model(
     model_name='117M',
@@ -44,7 +45,8 @@ def sample_model(
     if length is None:
         length = hparams.n_ctx
     elif length > hparams.n_ctx:
-        raise ValueError("Can't get samples longer than window size: %s" % hparams.n_ctx)
+        raise ValueError(
+            "Can't get samples longer than window size: %s" % hparams.n_ctx)
 
     texts = []
     with tf.Session(graph=tf.Graph()) as sess:
@@ -60,7 +62,8 @@ def sample_model(
         )
 
         saver = tf.train.Saver()
-        ckpt = tf.train.latest_checkpoint(os.path.join('gpt2/models', model_name))
+        ckpt = tf.train.latest_checkpoint(
+            os.path.join('gpt2/models', model_name))
         saver.restore(sess, ckpt)
 
         context_tokens = enc.encode(command)
@@ -75,6 +78,5 @@ def sample_model(
                 texts.append(text)
     return texts
 
-if __name__ == '__main__':
-    fire.Fire(sample_model)
-
+# if __name__ == '__main__':
+#     fire.Fire(sample_model)

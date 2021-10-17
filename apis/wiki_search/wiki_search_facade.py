@@ -39,7 +39,7 @@ class WikiFacade:
 
         return response
 
-    def send_messages(self, response, channel='#translate'):
+    def send_messages(self, response, channel='#wiki'):
         channel = channel or self.default_channel
 
         slack_response = self.emit(response, channel)
