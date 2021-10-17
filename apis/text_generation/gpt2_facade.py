@@ -41,7 +41,7 @@ class GPT2Facade:
 
         return response
 
-    def send_messages(self, response, channel='#translate'):
+    def send_messages(self, response, channel='#gpt2'):
         channel = channel or self.default_channel
         command = self.parse_bot_commands(response)
         message = generate_unconditional_samples.sample_model(nsamples=1,

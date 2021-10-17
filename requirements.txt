@@ -17,3 +17,5 @@ oauth2client
 google-api-python-client
 googletrans==3.1.0a0
 Pillow
+wikipedia
+tensorflow
