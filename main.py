@@ -15,6 +15,8 @@ from apis.location_search.location_search_facade import LocationSearchFacade
 from apis.wiki_search.wiki_search_helper import WikiHelper
 from apis.wiki_search.wiki_search_facade import WikiFacade
 
+from apis.text_generation.gpt2_facade import GPT2Facade
+
 from configs.config import *
 from flask import Flask, Response
 from slackeventsapi import SlackEventAdapter
@@ -54,6 +56,8 @@ location_search_facade = LocationSearchFacade()
 
 wiki_helper = WikiHelper()
 wiki_facade = WikiFacade()
+
+gpt2_facade = GPT2Facade()
 
 
 @slack_event_adapter.on('message')
@@ -180,6 +184,10 @@ def handle_message(payload):
             wiki_facade.send_messages(response, channel=channel_id)
 
             return Response(), 200
+
+        elif '/gpt2' in text[:5].lower():
+            query = text.split('gpt2')[-1].lstrip().rstrip()
+            gpt2_facade.send_messages(query, channel=channel_id)
 
         else:
             news_facade.client.chat_postMessage(
