@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 import html
 # from fake_useragent import UserAgent
-from googlesearch import Search
+from apis.stackoverflow.googlesearch.googlesearch import Search
 import json
 
 
