@@ -8,6 +8,10 @@ import json
 
 
 class OverflowHelper():
+    """
+    Helper class for searching from Stackoverflow's answer
+    """
+
     def __init__(self):
         self.stackoverflow_base_api = "https://api.stackexchange.com/2.3"
         self.time_delay = 5
