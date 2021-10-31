@@ -4,6 +4,7 @@ import pandas as pd
 import os
 import matplotlib.pyplot as plt
 from utils import tableize
+plt.switch_backend('agg')
 
 def pretty_format(dict, mapping_dict=None, index=False):
     if mapping_dict is None:
@@ -31,8 +32,6 @@ def plot_image(info):
     plt.bar(info['Country'], info['Confirmed'], color= 'red', label= 'New Cases')
     plt.bar(info['Country'], info['Recovered'], color= 'blue', label= 'New Recovered')
     plt.bar(info['Country'], info['Deaths'], color= 'black', label= 'New Deaths')
-
-    plt.legend()
 
     plt.savefig(f'images/{"".join(info["Slug"])}.png')
 
