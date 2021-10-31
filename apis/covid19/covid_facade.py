@@ -29,19 +29,22 @@ class CovidFacade:
             channel: string, The channel to send the message to.
         """
         try:
-            response = self.client.chat_postMessage(
+            message_response = self.client.chat_postMessage(
                 channel=channel,
                 text=message,
                 username=self.bot_name,
                 icon_emoji=self.icon_emoji
             )
-            self.post_image_to_slack(file, channel)
+            # self.post_image_to_slack(file, channel)
+
+            file_response = self.client.files_upload(channels=channel, file=file) # upload image file to slack
 
         except SlackApiError as e:
             logging.error(f"Slack encountered an error: {e.response['error']}")
             raise e
+        
 
-        return response
+        return message_response, file_response
 
     def send_messages(self, messages, files, channel='#covid'):
         channel = channel or self.default_channel
@@ -49,18 +52,23 @@ class CovidFacade:
         # Send messages
         for ind, (file, message) in enumerate(zip(files,messages)):
             print('File: ', file)
-            slack_response = self.emit(message, file, channel)
+            message_response, file_response = self.emit(message, file, channel)
+
             logging.info(
-                f"Sent message {ind+1}/{len(messages)} to Slack:\n{slack_response}")
+                f"Sent message {ind+1}/{len(messages)} to Slack:\n{message_response}")
+            
+            logging.info(
+                f"Sent image {ind+1}/{len(files)} to Slack:\n{file_response}")
         
         logging.info(
-            f"Sent all {len(messages)} messages to Slack.")
+            f"Sent all {len(messages)} messages and {len(files)} images to Slack.")
 
     def post_image_to_slack(self, file, channel):
+        """
+        Image will be opened on local machine
+        """
         url = "https://slack.com/api/files.upload"
 
-        # with open(file, 'r') as fh:
-        #     image_data = fh.read()
         image_data = Image.open(file)
         image_data.show()
 
