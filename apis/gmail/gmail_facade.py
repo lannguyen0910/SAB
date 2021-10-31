@@ -26,7 +26,7 @@ class GmailFacade():
         self.client = WebClient(token=self.token)
         self.BOT_ID = self.client.api_call("auth.test")['user_id']
 
-        self.icon_emoji = ":gmail:"
+        self.icon_emoji = ":sab:"
 
         # Check https://developers.google.com/admin-sdk/directory/v1/guides/authorizing for all available scopes
         OAUTH_SCOPE = 'https://www.googleapis.com/auth/gmail.readonly'

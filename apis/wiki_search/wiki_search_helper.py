@@ -11,7 +11,7 @@ class WikiHelper:
     def __init__(self) -> None:
         super().__init__()
 
-    def do_command(self, command, language_code):
+    def do_command(self, command, language_code='en'):
         """
         Execute command
         """
@@ -21,7 +21,7 @@ class WikiHelper:
 
         response = None
 
-        # Example call: $wiki python programming
+        # Example call: #wiki python programming
         query = command.split('wiki')[-1].lstrip().rstrip()
 
         try:

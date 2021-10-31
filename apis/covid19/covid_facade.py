@@ -19,7 +19,7 @@ class CovidFacade:
         self.client = WebClient(token=self.token)
         self.BOT_ID = self.client.api_call("auth.test")['user_id']
 
-        self.icon_emoji = ":mask:"
+        self.icon_emoji = ":sab:"
 
     def emit(self, message, file, channel):
         """Sends a message to your channel.

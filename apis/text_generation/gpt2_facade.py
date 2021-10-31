@@ -19,7 +19,7 @@ class GPT2Facade:
         self.client = WebClient(token=self.token)
         self.BOT_ID = self.client.api_call("auth.test")['user_id']
         self.MENTION_REGEX = "^<@(|[WU].+?)>(.*)"
-        self.icon_emoji = ":wikipedia:"
+        self.icon_emoji = ":sab:"
 
     def emit(self, message, channel):
         """Sends a message to your channel.

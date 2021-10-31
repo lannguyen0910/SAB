@@ -34,7 +34,7 @@ class NewsFacade(object):
         self.client = WebClient(token=self.token)
         self.BOT_ID = self.client.api_call("auth.test")['user_id']
 
-        self.icon_emoji = ":newspaper:"
+        self.icon_emoji = ":sab:"
         self.slack_message_entries = {}
 
     def emit(self, blocks, channel):
