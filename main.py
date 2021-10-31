@@ -15,6 +15,8 @@ from apis.location_search.location_search_facade import LocationSearchFacade
 from apis.wiki_search.wiki_search_helper import WikiHelper
 from apis.wiki_search.wiki_search_facade import WikiFacade
 
+from apis.stackoverflow.overflow_facade import OverflowFacade
+
 from apis.text_generation.gpt2_facade import GPT2Facade
 
 from configs.config import *
@@ -59,6 +61,8 @@ wiki_facade = WikiFacade()
 
 gpt2_facade = GPT2Facade()
 
+overflow_facade = OverflowFacade()
+
 
 @slack_event_adapter.on('message')
 # Handle all message events
@@ -76,7 +80,7 @@ def handle_message(payload):
             response = show_commands(user_id)
             news_facade.client.chat_postMessage(channel=channel_id, **response)
 
-        elif "/news" in text[:5].lower():
+        elif "#news" in text[:5].lower():
             user_response = text[5:].split(", ")
             category = None
 
@@ -105,7 +109,7 @@ def handle_message(payload):
 
             return Response(), 200
 
-        elif "/covid" in text[:6].lower():
+        elif "#covid" in text[:6].lower():
             user_response = text[6:].split(", ")
             countries = []
             if len(user_response) == 0:
@@ -133,7 +137,7 @@ def handle_message(payload):
 
             return Response(), 200
 
-        elif '/translate' in text[:10].lower():
+        elif '#translate' in text[:10].lower():
             user_response = text[10:].split(", ")
 
             # language you want translate to
@@ -152,7 +156,7 @@ def handle_message(payload):
 
             return Response(), 200
 
-        elif "/search" in text[:7].lower():
+        elif "#search" in text[:7].lower():
             user_response = text[7:].split(", ")
             location = None
             if len(user_response) > 1:
@@ -166,7 +170,7 @@ def handle_message(payload):
 
             return Response(), 200
 
-        elif '/wiki' in text[:5].lower():
+        elif '#wiki' in text[:5].lower():
             user_response = text[5:].split(", ")
 
             # language you want translate to
@@ -185,9 +189,18 @@ def handle_message(payload):
 
             return Response(), 200
 
-        elif '/gpt2' in text[:5].lower():
+        elif '#gpt2' in text[:5].lower():
             query = text.split('gpt2')[-1].lstrip().rstrip()
             gpt2_facade.send_messages(query, channel=channel_id)
+
+            return Response(), 200
+
+        elif '#overflow' in text[:9].lower():
+            query = text[10:]
+            print('Overflow query: ', query)
+            overflow_facade.send_messages(query, channel=channel_id)
+
+            return Response(), 200
 
         else:
             news_facade.client.chat_postMessage(
