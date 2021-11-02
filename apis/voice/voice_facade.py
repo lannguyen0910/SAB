@@ -5,7 +5,7 @@ from slack_sdk.errors import SlackApiError
 from configs.config import *
 
 
-class CovidFacade:
+class VoiceFacade:
 
     def __init__(self, token=SLACK_BOT_TOKEN,
                  bot_name=SLACK_BOT_NAME):
