@@ -11,7 +11,6 @@ from apis.news.query_helper import QueryHelper
 from apis.translate.translate_helper import TranslateHelper
 from apis.translate.translate_facade import TranslateFacade
 
-from apis.location_search.location_search_helper import LocationSearchHelper
 from apis.location_search.location_search_facade import LocationSearchFacade
 
 from apis.wiki_search.wiki_search_helper import WikiHelper
@@ -23,6 +22,9 @@ from apis.stackoverflow.overflow_facade import OverflowFacade
 
 from apis.voice.voice_helper import GoogleVoiceHelper
 from apis.voice.voice_facade import VoiceFacade
+
+from apis.paper_summerization.arxiv_helper import ArxivHelper
+from apis.paper_summerization.arxiv_facade import ArxivFacade
 
 # from apis.text_generation.gpt2_facade import GPT2Facade
 
@@ -55,7 +57,6 @@ covid_facade = CovidFacade()
 translate_api_helper = TranslateHelper()
 translate_facade = TranslateFacade()
 
-location_search_helper = LocationSearchHelper()
 location_search_facade = LocationSearchFacade()
 
 wiki_helper = WikiHelper()
@@ -67,6 +68,9 @@ overflow_facade = OverflowFacade()
 
 voice_helper = GoogleVoiceHelper()
 voice_facade = VoiceFacade()
+
+arxiv_helper = ArxivHelper()
+arxiv_facade = ArxivFacade()
 
 
 @slack_event_adapter.on('message')
@@ -86,7 +90,7 @@ def handle_message(payload):
             news_facade.client.chat_postMessage(channel=channel_id, **response)
 
         elif "$news" in text[:5].lower():
-            user_response = text[5:].split(", ")
+            user_response = text[6:].split(", ")
             category = None
 
             category = user_response[0]
@@ -155,7 +159,7 @@ def handle_message(payload):
             for language_tuple in LANGUAGES:
                 if language_tuple[1].lower() == assigned_language:
                     language_code = language_tuple[0]
-            
+
             response = translate_api_helper.do_command(text, language_code)
 
             translate_facade.send_messages(response, channel=channel_id)
@@ -169,10 +173,9 @@ def handle_message(payload):
                 location = user_response[1]
 
             term = user_response[0]
-            result = location_search_helper.search(term, location)
 
             location_search_facade.send_messages(
-                result, location, channel=channel_id)
+                term, location, channel=channel_id)
 
             return Response(), 200
 
@@ -195,13 +198,6 @@ def handle_message(payload):
 
             return Response(), 200
 
-        # elif '$gpt2' in text[:5].lower():
-        #     query = text[6:]
-        #     print('Gpt2 query: ', query)
-        #     gpt2_facade.send_messages(query, channel=channel_id)
-
-        #     return Response(), 200
-
         elif '$overflow' in text[:9].lower():
             query = text.split('overflow')[-1].lstrip().rstrip()
             print('Overflow query: ', query)
@@ -223,7 +219,7 @@ def handle_message(payload):
         #         time.sleep(10)
 
         #     return Response(), 200
-            
+
         elif "$voice" in text[:6].lower():
             user_response = text[7:].split(", ")
 
@@ -236,7 +232,7 @@ def handle_message(payload):
             for language_tuple in LANGUAGES:
                 if language_tuple[1].lower() == assigned_language:
                     language_code = language_tuple[0]
-            
+
             print("language_code: " + language_code)
 
             voice_helper.do_command(text, lang=language_code)
@@ -247,7 +243,22 @@ def handle_message(payload):
 
             return Response(), 200
 
-        else:   
+        elif "$arxiv" in text[:6].lower():
+            command = text[7:]
+
+            articles = arxiv_helper.parse_arxiv_link(command)
+            if len(articles) > 0:
+                response = 'Here is what I found on arXiv: '
+                for article in articles:
+                    response += '\n\n'
+                    response += arxiv_helper.format_arxiv(article)
+                    response += '\n\n'
+            else:
+                response = "Don't seem to find an arXiv paper..."
+
+            arxiv_facade.send_messages(response, channel=channel_id)
+
+        else:
             news_facade.client.chat_postMessage(
                 channel=channel_id, text=default_message)
 
