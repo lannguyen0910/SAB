@@ -8,3 +8,4 @@ images
 token files
 *.pickle
 search.py
+*.ipynb
