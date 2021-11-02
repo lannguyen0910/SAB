@@ -21,11 +21,6 @@ class OverflowFacade:
         self.icon_emoji = ":robot_face:"
 
     def emit(self, response, channel):
-        """Sends a message to your channel.
-        Args:
-            message: string. Wiki searching texts.
-            channel: string, The channel to send the message to.
-        """
         try:
             title, link, text = response
             response = self.client.chat_postMessage(
@@ -57,57 +52,6 @@ class OverflowFacade:
 
         logging.info(
             f"Response text from Slack {slack_response}")
-
-    # def reply_thread(self, thread_ts, channel, response):
-    #     title, link, text = response
-    #     self.client.chat_postMessage(
-    #         channel=channel,
-    #         attachments=[
-    #             {
-    #                 "title": title,
-    #                 "pretext": link,
-    #                 "text": text,
-    #                 "mrkdwn_in": ["text"]
-    #             }
-    #         ],
-    #         thread_ts=thread_ts
-    #     )
-
-    # def post_to_channel(self, channel, response):
-    #     title, link, text = response
-    #     self.client.api_call(
-    #         "chat.postMessage",
-    #         channel=channel,
-    #         attachments=[
-    #             {
-    #                 "title": title,
-    #                 "pretext": link,
-    #                 "text": text,
-    #                 "mrkdwn_in": ["text"]
-    #             }
-    #         ]
-    #     )
-
-    # def parse_events(self, slack_events):
-    #     for event in slack_events:
-    #         # TODO: Make sure that we at least take care of the obvious edge cases.
-    #         if event["type"] == "message":
-    #             if "subtype" in event:
-    #                 # Ignore bot messages
-    #                 if event["subtype"] == "bot_message":
-    #                     return
-
-    #             if "text" in event:
-    #                 message = event["text"]
-    #                 # If DMing bot
-    #                 if event["channel"][0] == "D":
-    #                     response = generate_answer(message, True)
-    #                     post_to_channel(event["channel"], response)
-    #                 # If mentioning bot
-    #                 elif bot_id in message:
-    #                     message = message.replace("<@{0}>".format(bot_id), "")
-    #                     response = generate_answer(message, False)
-    #                     reply_thread(event["ts"], event["channel"], response)
 
     def html_mrkdwn(self, text):
         text = text.replace('<p>', '').replace('</p>', '')
