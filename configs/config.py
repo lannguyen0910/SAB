@@ -28,8 +28,11 @@ CLIENT_SECRET_FILE = 'token.json'
 
 # -------------------------------- LOCATION SEARCH ---------------------------------
 DEFAULT_LIMIT = os.environ.get('DEFAULT_LIMIT')  # Ex: 5
-DEFAULT_LOCATION = os.environ.get('DEFAULT_LOCATION')  # Ex: Berlin, Singapore,...
+# Ex: Berlin, Singapore,...
+DEFAULT_LOCATION = os.environ.get('DEFAULT_LOCATION')
 YELP_API_KEY = os.environ.get('YELP_API_KEY')
+BUSINESS_PATH = 'https://api.yelp.com/v3/businesses/search'
+HEADERS = {'Authorization': 'bearer %s' % YELP_API_KEY}
 
 # -------------------------------------GMAIL ---------------------------------
 GMAIL_CLIENT_SECRET_FILE = 'default_cs.json'
