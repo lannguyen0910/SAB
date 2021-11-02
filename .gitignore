@@ -9,3 +9,4 @@ token files
 *.pickle
 search.py
 *.ipynb
+*.mp3
