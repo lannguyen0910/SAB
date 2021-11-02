@@ -17,7 +17,7 @@ from apis.location_search.location_search_facade import LocationSearchFacade
 from apis.wiki_search.wiki_search_helper import WikiHelper
 from apis.wiki_search.wiki_search_facade import WikiFacade
 
-from apis.gmail.gmail_facade import GmailFacade
+# from apis.gmail.gmail_facade import GmailFacade
 
 from apis.stackoverflow.overflow_facade import OverflowFacade
 
@@ -61,7 +61,7 @@ location_search_facade = LocationSearchFacade()
 wiki_helper = WikiHelper()
 wiki_facade = WikiFacade()
 
-gmail_facade = GmailFacade()
+# gmail_facade = GmailFacade()
 
 overflow_facade = OverflowFacade()
 
@@ -209,20 +209,20 @@ def handle_message(payload):
 
             return Response(), 200
 
-        elif '$gmail' in text[:6].lower():
-            user_response = text.split(' ')
-            while True:
-                try:
-                    gmail_facade.gmail2slack(channel_id=channel_id)
-                except:
-                    traceback.print_exc()
+        # elif '$gmail' in text[:6].lower():
+        #     user_response = text.split(' ')
+        #     while True:
+        #         try:
+        #             gmail_facade.gmail2slack(channel_id=channel_id)
+        #         except:
+        #             traceback.print_exc()
 
-                if len(user_response) != 1 and user_response[1].lower() == 'stop':
-                    break
+        #         if len(user_response) != 1 and user_response[1].lower() == 'stop':
+        #             break
 
-                time.sleep(10)
+        #         time.sleep(10)
 
-            return Response(), 200
+        #     return Response(), 200
             
         elif "$voice" in text[:6].lower():
             user_response = text[7:].split(", ")
@@ -236,8 +236,12 @@ def handle_message(payload):
             for language_tuple in LANGUAGES:
                 if language_tuple[1].lower() == assigned_language:
                     language_code = language_tuple[0]
-                    
-            filename = voice_helper.do_command(text, lang=language_code)
+            
+            print("language_code: " + language_code)
+
+            voice_helper.do_command(text, lang=language_code)
+
+            filename = './.cache/temp.mp3'
 
             voice_facade.send_messages(filename, channel=channel_id)
 

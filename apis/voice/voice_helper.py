@@ -1,10 +1,6 @@
 import os
 from gtts import gTTS
 from googletrans import Translator
-from datetime import datetime
-
-
-
 
 CACHE_DIR ='./.cache'
 
@@ -34,10 +30,8 @@ class GoogleVoiceHelper:
         if not os.path.exists(CACHE_DIR):
             os.mkdir(CACHE_DIR)
         
-        # dd/mm/YY-H:M:S
-        dt_string = datetime.now().strftime("%d/%m/%Y-%H:%M:%S")
         
-        filename = os.path.join(CACHE_DIR, dt_string)
+        filename = os.path.join(CACHE_DIR, 'temp.mp3')
 
         if lang is None:
             # Detect language
@@ -54,7 +48,6 @@ class GoogleVoiceHelper:
         else:
             print('Speech filename error...')
         
-        return filename
 
     def do_command(self, command, lang='vi'):
         """
@@ -69,5 +62,4 @@ if __name__ == '__main__':
     text = '$speak "Thực ra là mình đã mến bạn từ rất lâu rồi đấy :>"'
     lang = 'vi'
 
-    filename = helper.do_command(text, lang)
-    print('Filename: ', filename)
+    helper.do_command(text, lang)
