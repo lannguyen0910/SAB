@@ -33,6 +33,8 @@ def plot_image(info):
     plt.bar(info['Country'], info['Recovered'], color= 'blue', label= 'New Recovered')
     plt.bar(info['Country'], info['Deaths'], color= 'black', label= 'New Deaths')
 
+    plt.legend()
+
     plt.savefig(f'images/{"".join(info["Slug"])}.png')
 
 class CovidApiHelper:
