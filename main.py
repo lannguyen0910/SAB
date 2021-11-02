@@ -1,4 +1,6 @@
 import logging
+import time
+import traceback
 from apis.covid19.covid_facade import CovidFacade
 from apis.covid19.covid_helper import CovidApiHelper
 
@@ -15,9 +17,14 @@ from apis.location_search.location_search_facade import LocationSearchFacade
 from apis.wiki_search.wiki_search_helper import WikiHelper
 from apis.wiki_search.wiki_search_facade import WikiFacade
 
+from apis.gmail.gmail_facade import GmailFacade
+
 from apis.stackoverflow.overflow_facade import OverflowFacade
 
-from apis.text_generation.gpt2_facade import GPT2Facade
+from apis.voice.voice_helper import GoogleVoiceHelper
+from apis.voice.voice_facade import VoiceFacade
+
+# from apis.text_generation.gpt2_facade import GPT2Facade
 
 from configs.config import *
 from flask import Flask, Response
@@ -54,9 +61,12 @@ location_search_facade = LocationSearchFacade()
 wiki_helper = WikiHelper()
 wiki_facade = WikiFacade()
 
-gpt2_facade = GPT2Facade()
+gmail_facade = GmailFacade()
 
 overflow_facade = OverflowFacade()
+
+voice_helper = GoogleVoiceHelper()
+voice_facade = VoiceFacade()
 
 
 @slack_event_adapter.on('message')
@@ -185,11 +195,12 @@ def handle_message(payload):
 
             return Response(), 200
 
-        elif '$gpt2' in text[:5].lower():
-            query = text.split('gpt2')[-1].lstrip().rstrip()
-            gpt2_facade.send_messages(query, channel=channel_id)
+        # elif '$gpt2' in text[:5].lower():
+        #     query = text[6:]
+        #     print('Gpt2 query: ', query)
+        #     gpt2_facade.send_messages(query, channel=channel_id)
 
-            return Response(), 200
+        #     return Response(), 200
 
         elif '$overflow' in text[:9].lower():
             query = text.split('overflow')[-1].lstrip().rstrip()
@@ -198,7 +209,41 @@ def handle_message(payload):
 
             return Response(), 200
 
-        else:
+        elif '$gmail' in text[:6].lower():
+            user_response = text.split(' ')
+            while True:
+                try:
+                    gmail_facade.gmail2slack(channel_id=channel_id)
+                except:
+                    traceback.print_exc()
+
+                if len(user_response) != 1 and user_response[1].lower() == 'stop':
+                    break
+
+                time.sleep(10)
+
+            return Response(), 200
+            
+        elif "$voice" in text[:6].lower():
+            user_response = text[7:].split(", ")
+
+            # language you want translate to
+            assigned_language = user_response[0]
+            # text of any languages that you want to translate
+            text = user_response[1]
+
+            language_code = DEFAULT_LANGUAGE_CODE
+            for language_tuple in LANGUAGES:
+                if language_tuple[1].lower() == assigned_language:
+                    language_code = language_tuple[0]
+                    
+            filename = voice_helper.do_command(text, lang=language_code)
+
+            voice_facade.send_messages(filename, channel=channel_id)
+
+            return Response(), 200
+
+        else:   
             news_facade.client.chat_postMessage(
                 channel=channel_id, text=default_message)
 
