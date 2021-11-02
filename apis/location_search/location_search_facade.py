@@ -1,7 +1,8 @@
 import logging
+import requests
+
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
-
 from configs.config import *
 
 
@@ -39,13 +40,27 @@ class LocationSearchFacade:
 
         return response
 
-    def send_messages(self, result, location, channel='#search'):
+    def send_messages(self, response, location, channel='#search'):
         channel = channel or self.default_channel
+
+        result = self.search(response, location)
         message = self.display_search(result, location)
+
         slack_response = self.emit(message, channel)
 
         logging.info(
             f"Searched places from Slack {slack_response}")
+
+    def search(self, response, location):
+        params = {
+            'term': response,
+            'location': location or DEFAULT_LOCATION,
+            'open_now': True,
+            'limit': DEFAULT_LIMIT
+        }
+
+        response = requests.get(BUSINESS_PATH, headers=HEADERS, params=params)
+        return response.json()['businesses']
 
     def display_search(self, response, location):
         if not response:
