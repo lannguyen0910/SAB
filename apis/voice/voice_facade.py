@@ -17,7 +17,7 @@ class VoiceFacade:
         self.client = WebClient(token=self.token)
         self.BOT_ID = self.client.api_call("auth.test")['user_id']
 
-        self.icon_emoji = ":sab:"
+        self.icon_emoji = ":robot_face:"
 
     def emit(self, file, channel):
         try:
