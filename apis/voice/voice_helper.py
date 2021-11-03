@@ -2,15 +2,17 @@ import os
 from gtts import gTTS
 from googletrans import Translator
 
-CACHE_DIR ='./.cache'
+CACHE_DIR = './.cache'
 
-def find_text(text):  
+
+def find_text(text):
     """
     Find string inside double quotes    
     """
     import re
-    matches=re.findall(r'\"(.+?)\"',text)
+    matches = re.findall(r'\"(.+?)\"', text)
     return matches[0]
+
 
 class GoogleVoiceHelper:
     """
@@ -18,6 +20,7 @@ class GoogleVoiceHelper:
     https://github.com/pndurette/gTTS
     """
     translator = Translator()
+
     def __init__(self) -> None:
         super().__init__()
         self.triggers = ["$speak"]
@@ -29,8 +32,7 @@ class GoogleVoiceHelper:
         """
         if not os.path.exists(CACHE_DIR):
             os.mkdir(CACHE_DIR)
-        
-        
+
         filename = os.path.join(CACHE_DIR, 'temp.mp3')
 
         if lang is None:
@@ -47,14 +49,13 @@ class GoogleVoiceHelper:
             print('Sucessfully created speech!')
         else:
             print('Speech filename error...')
-        
 
     def do_command(self, command, lang='vi'):
         """
         Execute command
         """
-        text = find_text(command) # find texts in double quotes
-        self.speak(text, lang)   
+        text = find_text(command)  # find texts in double quotes
+        self.speak(text, lang)
 
 
 if __name__ == '__main__':

@@ -17,7 +17,6 @@ oauth2client
 googletrans==3.1.0a0
 Pillow
 wikipedia
-# tensorflow
 arrow
 google
 fake-useragent==0.1.11
