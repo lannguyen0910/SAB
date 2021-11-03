@@ -32,26 +32,27 @@ pip install -r requirements.txt
 
 <details open>
  <summary><strong>Status</strong></summary>
- <strong><i>[03/11/2021]</i></strong> S.A.B is still in development stage and has some drawbacks. Documentation is on the way. If you want to integrate to your own slack channel, contact me for guidance. 
+ <strong><i>[03/11/2021]</i></strong> S.A.B is still in development stage (optimize + refactor + improve) and has some drawbacks. Documentation is on the way. If you want to integrate to your own slack channel, contact me for guidance.
 </details>
 
 ## What is S.A.B ?
-Inspired from K.A.I - Discord Bot. S.A.B is created as a Slack bot that can do a lot of things to experience work and play. From basic usage such as searching for places, searching for code, searching for news, searching wikipedia, summarize papers, translating multiple languages (text2text, text2speech),.. to even more intelligence tasks **(in the future)** like computer vision (classification, detection, segmentation, etc), natural language processing (telling jokes, answering questions, chatting) responding with voice.
+Inspired from [K.A.I-Discord Bot](https://github.com/kaylode/KAI). S.A.B is created as a Slack bot that can do a lot of things to experience work and play. From basic usage such as searching for places, searching for code, searching for news, searching wikipedia, summarize papers, translating multiple languages (text2text, text2speech),.. to even more intelligence tasks **(in the future)** like computer vision (classification, detection, segmentation, etc), natural language processing (telling jokes, answering questions, chatting) responding with voice.
 
 <!-- <a name="myfootnote1"><strong><i>[*]</i></strong></a>: **_With help of GPT-3 technology._** -->
 
 ## What can S.A.B do ?
-- [Wiki search](https://github.com/kaylode/KAI/wiki/Features:-Wiki-search)
-- Covid 19 information
-- [StackOverflow search](https://github.com/kaylode/KAI/wiki/Features:-Voice-control)
-- [Location Search]()
-- [Paper Summarize]()
-- [Google Translate](https://github.com/kaylode/KAI/wiki/Features:-Google-Translate)
-- [Google Text-to-speech](https://github.com/kaylode/KAI/wiki/Features:-Text-to-Speech)
+- [Wiki Search](https://github.com/lannguyen0910/SAB/wiki/Features:-Wiki-Search)
+- [Covid 19 Information](https://github.com/lannguyen0910/SAB/wiki/Features:-Covid-Analysis)
+- [StackOverflow Search](https://github.com/lannguyen0910/SAB/wiki/Features:-SlackOverflow)
+- [News Search](https://github.com/lannguyen0910/SAB/wiki/Features:-News-Search)
+- [Location Search](https://github.com/lannguyen0910/SAB/wiki/Features:-Location-Search)
+- [Papers Summarize](https://github.com/lannguyen0910/SAB/wiki/Features:-Paper-Summerize)
+- [Google Translate](https://github.com/lannguyen0910/SAB/wiki/Features:-Google-Translate)
+- [Google Text-to-speech](https://github.com/lannguyen0910/SAB/wiki/Features:-Text-to-Speech)
 - Email sending (Processing)
 - Shared calendar (Processing)
 - Play sounds/music to the whole channel (Processing)
-- [Basic Computer Vision Model API](https://github.com/kaylode/KAI/wiki/Features:-Computer-Vision)
+- Basic Computer Vision Model API (Processing)
 
 
 # **Set up**
