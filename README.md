@@ -98,3 +98,8 @@ python tests/news/<test_module>.py
 - **Adapted from _Kaylode_: [Discord Bot](https://github.com/kaylode/KAI/)**
 - **[Starter Tutorial](https://www.youtube.com/watch?v=KJ5bFv-IRFM&list=PLzMcBGfZo4-kqyzTzJWCV6lyK-ZMYECDc)**
 - **[SlackOverflow](https://github.com/karan/slack-overflow)**
+
+# **Contact**
+<p align="center">  
+<img href="mailto:18120051@student.hcmus.edu.vn" src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white&link=mailto:18120051@student.hcmus.edu.vn"/>
+ </p>
