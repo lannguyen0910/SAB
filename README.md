@@ -36,7 +36,7 @@ pip install -r requirements.txt
 </details>
 
 ## What is S.A.B ?
-Inspired from [K.A.I-Discord Bot](https://github.com/kaylode/KAI). S.A.B is created as a Slack bot that can do a lot of things to experience work and play. From basic usage such as searching for places, searching for code, searching for news, searching wikipedia, summarize papers, translating multiple languages (text2text, text2speech),.. to even more intelligence tasks **(in the future)** like computer vision (classification, detection, segmentation, etc), natural language processing (telling jokes, answering questions, chatting) responding with voice.
+Inspired from K.A.I. S.A.B is created as a Slack bot that can do a lot of things to experience work and play. From basic usage such as searching for places, searching for code, searching for news, searching wikipedia, summarize papers, translating multiple languages (text2text, text2speech),.. to even more intelligence tasks **(in the future)** like computer vision (classification, detection, segmentation, etc), natural language processing (telling jokes, answering questions, chatting) responding with voice.
 
 <!-- <a name="myfootnote1"><strong><i>[*]</i></strong></a>: **_With help of GPT-3 technology._** -->
 
