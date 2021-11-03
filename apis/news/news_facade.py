@@ -97,6 +97,7 @@ class NewsFacade(object):
         # Prep data and get final keys
         final_articles = self._chunk_message_data(articles, n=n)
         message_count = len(final_articles)
+        message = 'Not having any articles ...'
 
         logging.info(
             f"Sending listings via Slack in {message_count} messages.")
@@ -248,8 +249,8 @@ class NewsFacade(object):
                 }
             }
             return [header, first_block]
-        else:
-            return [first_block]
+
+        return [first_block]
 
     def create_rich_message_layout(self, name, articles, cont=False):
         """Returns a properly formatted array representation of ordered blocks.

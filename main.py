@@ -125,8 +125,8 @@ def handle_message(payload):
                 country = 'global'
                 countries.append(country)
             else:
-                for i in range(0, len(user_response)):
-                    countries.append(str(user_response[i]))
+                for _, country in enumerate(user_response):
+                    countries.append(str(country))
 
             print('Countries: ', countries)
 
@@ -267,4 +267,4 @@ def handle_message(payload):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()

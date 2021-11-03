@@ -6,13 +6,13 @@ import matplotlib.pyplot as plt
 from utils import tableize
 plt.switch_backend('agg')
 
-def pretty_format(dict, mapping_dict=None, index=False):
+
+def pretty_format(covid_dict, mapping_dict=None, index=False):
     if mapping_dict is None:
-        mapping_dict = {key:key for key in list(dict.keys())}
+        mapping_dict = {key: key for key in list(covid_dict.keys())}
 
-    new_dict = {mapping_dict[key]:[value] for key, value in dict.items() if key in mapping_dict.keys()}
-
-    print('New dict: ', new_dict)
+    new_dict = {mapping_dict[key]: [value] for key,
+                value in covid_dict.items() if key in mapping_dict.keys()}
 
     plot_image(new_dict)
 
@@ -24,41 +24,44 @@ def pretty_format(dict, mapping_dict=None, index=False):
 
     return tableize(df)
 
+
 def plot_image(info):
     if 'Slug' not in info.keys():
         info['Slug'] = 'global'
         info['Country'] = 'World'
 
-    plt.bar(info['Country'], info['Confirmed'], color= 'red', label= 'New Cases')
-    plt.bar(info['Country'], info['Recovered'], color= 'blue', label= 'New Recovered')
-    plt.bar(info['Country'], info['Deaths'], color= 'black', label= 'New Deaths')
+    plt.bar(info['Country'], info['Confirmed'], color='red', label='New Cases')
+    plt.bar(info['Country'], info['Recovered'],
+            color='blue', label='New Recovered')
+    plt.bar(info['Country'], info['Deaths'], color='black', label='New Deaths')
 
     plt.legend()
 
     plt.savefig(f'images/{"".join(info["Slug"])}.png')
 
+
 class CovidApiHelper:
     def __init__(self):
         self.url = "https://api.covid19api.com/"
-    
-    def send_request(self, url, data, type, headers, **kwargs):
-        if type == 'post':
+
+    def send_request(self, url, data, request_type, headers, **kwargs):
+        if request_type == 'post':
             response = requests.post(url, data=data, headers=headers)
-        elif type == 'get':
+        elif request_type == 'get':
             response = requests.get(url, data=data, headers=headers)
 
         return self.process_response(response, **kwargs)
-    
+
     def process_response(self, response, country_name):
         """
         Process response from server
         """
         try:
-            data = response.json()  
+            data = response.json()
             if 'message' not in data.keys():
 
                 if country_name == 'global':
-                    covid_info = data["Global"] # a dict
+                    covid_info = data["Global"]  # a dict
 
                     """
                     "NewConfirmed": 100282,
@@ -70,12 +73,12 @@ class CovidApiHelper:
                     """
 
                     extracted_keys = {
-                      "TotalConfirmed": "Confirmed",
-                      "TotalDeaths": "Deaths",
-                      "TotalRecovered": "Recovered"
+                        "TotalConfirmed": "Confirmed",
+                        "TotalDeaths": "Deaths",
+                        "TotalRecovered": "Recovered"
                     }
                 else:
-                    countries_info = data["Countries"] # a list of dict
+                    countries_info = data["Countries"]  # a list of dict
 
                     """
                     "Country": "Viet Nam",
@@ -91,11 +94,11 @@ class CovidApiHelper:
                     """
 
                     extracted_keys = {
-                      "Country": "Country",
-                      "TotalConfirmed": "Confirmed",
-                      "TotalDeaths": "Deaths",
-                      "TotalRecovered": "Recovered",
-                      "Slug": "Slug"
+                        "Country": "Country",
+                        "TotalConfirmed": "Confirmed",
+                        "TotalDeaths": "Deaths",
+                        "TotalRecovered": "Recovered",
+                        "Slug": "Slug"
                     }
 
                     covid_info = {}
@@ -103,13 +106,12 @@ class CovidApiHelper:
                         if country['Slug'] == country_name:
                             covid_info = country
                             break
-                
 
-                response = pretty_format(covid_info, extracted_keys)           
+                response = pretty_format(covid_info, extracted_keys)
             else:
                 logging.info(f"Bad request code...")
                 response = f"[Error] Request code {data['code']}"
-                return               
+                return
         except Exception as e:
             logging.info(f"Error...")
             response = "[Error] " + str(e)
@@ -131,13 +133,15 @@ class CovidApiHelper:
         payload = {}
 
         # Send request
-        response = self.send_request(url, payload, type='get', headers=headers, country_name=country_name)
-        
+        response = self.send_request(
+            url, payload, type='get', headers=headers, country_name=country_name)
+
         logging.info(f"Received response from {self.url}")
         return response
+
 
 if __name__ == '__main__':
     covid = CovidApiHelper()
     summary = covid.get_summary('united-states')
-    
+
     print(summary)

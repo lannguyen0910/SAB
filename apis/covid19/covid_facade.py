@@ -37,12 +37,12 @@ class CovidFacade:
             )
             # self.post_image_to_slack(file, channel)
 
-            file_response = self.client.files_upload(channels=channel, file=file) # upload image file to slack
+            file_response = self.client.files_upload(
+                channels=channel, file=file)  # upload image file to slack
 
         except SlackApiError as e:
             logging.error(f"Slack encountered an error: {e.response['error']}")
             raise e
-        
 
         return message_response, file_response
 
@@ -50,16 +50,16 @@ class CovidFacade:
         channel = channel or self.default_channel
 
         # Send messages
-        for ind, (file, message) in enumerate(zip(files,messages)):
+        for ind, (file, message) in enumerate(zip(files, messages)):
             print('File: ', file)
             message_response, file_response = self.emit(message, file, channel)
 
             logging.info(
                 f"Sent message {ind+1}/{len(messages)} to Slack:\n{message_response}")
-            
+
             logging.info(
                 f"Sent image {ind+1}/{len(files)} to Slack:\n{file_response}")
-        
+
         logging.info(
             f"Sent all {len(messages)} messages and {len(files)} images to Slack.")
 
@@ -86,9 +86,7 @@ class CovidFacade:
 
         if response.status_code == 200:
             print("successfully completed post image to slack "
-                        "and status code %s" % response.status_code)
+                  "and status code %s" % response.status_code)
         else:
             print("Failed to post image on slack channel "
-                        "and status code %s" % response.status_code)
-
-        
+                  "and status code %s" % response.status_code)
