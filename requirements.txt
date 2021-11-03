@@ -19,11 +19,7 @@ Pillow
 wikipedia
 arrow
 google
-fake-useragent==0.1.11
 user-agents==2.2.0
-beautifulsoup4
-python-googlesearch
-gpt2-client
 pandas
 matplotlib
 fire>=0.1.3

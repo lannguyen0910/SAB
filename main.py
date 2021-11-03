@@ -1,6 +1,7 @@
 import logging
 import time
 import traceback
+
 from apis.covid19.covid_facade import CovidFacade
 from apis.covid19.covid_helper import CovidApiHelper
 

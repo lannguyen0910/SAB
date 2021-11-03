@@ -1,10 +1,5 @@
-import urllib
 import requests
-from bs4 import BeautifulSoup
-import html
-# from fake_useragent import UserAgent
 from apis.stackoverflow.googlesearch.googlesearch import Search
-import json
 
 
 class OverflowHelper():

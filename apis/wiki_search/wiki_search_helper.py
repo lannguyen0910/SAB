@@ -26,9 +26,6 @@ class WikiHelper:
 
         try:
             response = wikipedia.summary(query, sentences=5)
-            # page = wikipedia.page(query)
-            # page.url
-            # page.images[0]
             logging.info(f'{response}')
 
         except wikipedia.exceptions.DisambiguationError as e:

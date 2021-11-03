@@ -10,4 +10,4 @@ token files
 search.py
 *.ipynb
 *.mp3
-apis/calendar/calendar_facade.py
+calendar_facade.py

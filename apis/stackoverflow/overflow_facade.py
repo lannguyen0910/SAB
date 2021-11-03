@@ -1,5 +1,4 @@
 import logging
-import urllib
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 from .overflow_helper import OverflowHelper

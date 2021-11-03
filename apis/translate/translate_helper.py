@@ -1,19 +1,22 @@
 from googletrans import Translator
 import logging
 
-def find_text(text):  
+
+def find_text(text):
     """
     Find string inside double quotes    
     """
     import re
-    matches=re.findall(r'\"(.+?)\"',text)
+    matches = re.findall(r'\"(.+?)\"', text)
     return matches[0]
+
 
 class TranslateHelper:
     """
     Google translation API
     https://py-googletrans.readthedocs.io/en/latest/
     """
+
     def __init__(self) -> None:
         super().__init__()
         self.translator = Translator()
@@ -26,7 +29,7 @@ class TranslateHelper:
 
         # command ex: /translate "Hello"
         try:
-            text = find_text(command) # find texts in double quotes
+            text = find_text(command)  # find texts in double quotes
             response = self.translate(text=text, dest=dest)
 
             logging.info(f"{response}")
@@ -54,15 +57,15 @@ class TranslateHelper:
         if src is None:
             src = self.detect_language(text)
 
-        result = self.translator.translate(text,src=src, dest=dest)
+        result = self.translator.translate(text, src=src, dest=dest)
         response = result.text
 
         logging.info(f'Translated text: {response}')
         return response
+
 
 if __name__ == '__main__':
     google = TranslateHelper()
     text = '/translate "I love you"'
     response = google.do_command(text, 'vi')
     print("Response: ", response)
-    
