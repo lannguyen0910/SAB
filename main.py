@@ -94,7 +94,6 @@ def handle_message(payload):
             category = None
 
             category = user_response[0]
-            print("Category: ", category)
 
             country = user_response[1] if len(user_response) > 1 else None
             language = user_response[2] if len(user_response) > 2 else None
@@ -127,8 +126,6 @@ def handle_message(payload):
             else:
                 for _, country in enumerate(user_response):
                     countries.append(str(country))
-
-            print('Countries: ', countries)
 
             responses, files = [], []
             for country in countries:
@@ -200,7 +197,7 @@ def handle_message(payload):
 
         elif '$overflow' in text[:9].lower():
             query = text.split('overflow')[-1].lstrip().rstrip()
-            print('Overflow query: ', query)
+
             overflow_facade.send_messages(query, channel=channel_id)
 
             return Response(), 200
@@ -232,8 +229,6 @@ def handle_message(payload):
             for language_tuple in LANGUAGES:
                 if language_tuple[1].lower() == assigned_language:
                     language_code = language_tuple[0]
-
-            print("language_code: " + language_code)
 
             voice_helper.do_command(text, lang=language_code)
 

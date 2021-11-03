@@ -63,14 +63,12 @@ class CovidApiHelper:
                 if country_name == 'global':
                     covid_info = data["Global"]  # a dict
 
-                    """
-                    "NewConfirmed": 100282,
-                    "TotalConfirmed": 1162857,
-                    "NewDeaths": 5658,
-                    "TotalDeaths": 63263,
-                    "NewRecovered": 15405,
-                    "TotalRecovered": 230845
-                    """
+                    # "NewConfirmed": 100282,
+                    # "TotalConfirmed": 1162857,
+                    # "NewDeaths": 5658,
+                    # "TotalDeaths": 63263,
+                    # "NewRecovered": 15405,
+                    # "TotalRecovered": 230845
 
                     extracted_keys = {
                         "TotalConfirmed": "Confirmed",
@@ -80,18 +78,16 @@ class CovidApiHelper:
                 else:
                     countries_info = data["Countries"]  # a list of dict
 
-                    """
-                    "Country": "Viet Nam",
-                    "CountryCode": "VN",
-                    "Slug": "vietnam",
-                    "NewConfirmed": 3,
-                    "TotalConfirmed": 240,
-                    "NewDeaths": 0,
-                    "TotalDeaths": 0,
-                    "NewRecovered": 5,
-                    "TotalRecovered": 90,
-                    "Date": "2020-04-05T06:37:00Z"
-                    """
+                    # "Country": "Viet Nam",
+                    # "CountryCode": "VN",
+                    # "Slug": "vietnam",
+                    # "NewConfirmed": 3,
+                    # "TotalConfirmed": 240,
+                    # "NewDeaths": 0,
+                    # "TotalDeaths": 0,
+                    # "NewRecovered": 5,
+                    # "TotalRecovered": 90,
+                    # "Date": "2020-04-05T06:37:00Z"
 
                     extracted_keys = {
                         "Country": "Country",
